@@ -1,3 +1,5 @@
+
+const bullets = []
 // pobranie elementów
 
 const playerElement = document.querySelector('#player')
@@ -28,6 +30,7 @@ const createBullet = () => {
 
     // dodaj pocisk
     boardElement.appendChild(bullet)
+    bullets.push(bullet)
 
 }
 
@@ -41,3 +44,22 @@ const handleKeyboard = (e) => {
 
 // obsłużenie klawiatury
 window.addEventListener('keydown', handleKeyboard)
+
+const moveBullets = () => {
+    for (let i = 0; i<bullets.length; i++){
+        const bullet = bullets[i]
+
+        // przesuń pocisk
+        bullet.style.top = `${bullet.offsetTop - 10}px`
+
+        if (bullet.offsetTop <=0){
+            // usuń pocisk jeśli jest poza mapą
+            bullets.splice(i, 1)
+            i--
+            bullet.remove()
+        }
+    }
+}
+
+// interwały
+setInterval(moveBullets, 250)
